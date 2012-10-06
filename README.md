@@ -1,4 +1,4 @@
 the-peg-game
 ============
 
-tormenting courtesy of your neighborhood cracker barrel
+An attempt to re-create the peg game in JavaScript, popularized by Cracker Barrel.
