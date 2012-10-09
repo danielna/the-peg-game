@@ -35,10 +35,6 @@ peggame.Peg = function () {
     // 
     this.move_peg_return_removed = function(new_position) {
         this.calculate_moves_available();
-        // console.info("moves_avail:", JSON.stringify(moves_available));
-        // console.info("old:", position);
-        // console.info("new_position:", new_position);
-        // console.info("removed:", moves_available[new_position]);
         if (moves_available[new_position]) {
             return moves_available[new_position];
         } else {

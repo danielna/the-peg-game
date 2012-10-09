@@ -1,7 +1,7 @@
 /*
 the Game Board
     - Contain pegs
-    - Determine the game state -- Not Started: null, In Progress: null, Won: null, Lost
+    - Determine the game state -- Not Started, In Progress, End
     - Maintain available and taken positions
 
     The board positions:
@@ -18,7 +18,8 @@ peggame.Board = function () {
 
     var 
         game_state = peggame.globals.STATE.NOT_STARTED,
-        game_board = {};
+        game_board = {},
+        remaining_pegs = 15;
     
     this.reset = function() {
         game_state              = peggame.globals.STATE.NOT_STARTED,
@@ -37,7 +38,7 @@ peggame.Board = function () {
         this.out();
         var that = this;
 
-        game_state  = peggame.globals.IN_PROGRESS
+        game_state  = peggame.globals.STATE.IN_PROGRESS;
 
         $.each(game_board, function(key, value) {
             var peg = new peggame.Peg();
@@ -57,6 +58,13 @@ peggame.Board = function () {
 
     this.remove_peg = function(position) {
         game_board[position] = null;
+        remaining_pegs--;
+    };
+
+    this.reassign_peg = function(old_pos, new_pos) {
+        game_board[new_pos] = game_board[old_pos];
+        game_board[new_pos].set_position(new_pos);
+        game_board[old_pos] = null;
     };
 
     // if you can move it, recalc the board and return true.
@@ -67,12 +75,15 @@ peggame.Board = function () {
             var removed_peg = peg.move_peg_return_removed(new_pos);
             
             if (removed_peg !== "") {
-                game_board[new_pos] = game_board[old_pos];
-                game_board[new_pos].set_position(new_pos);
-                this.remove_peg(old_pos);
+                this.reassign_peg(old_pos, new_pos);
                 this.remove_peg(removed_peg);
                 this.out();
+                if (this.is_the_game_over()){
+                    this.end_game();
+                }
+                
                 return true;
+            
             } else {
                 console.info("move_peg", "something went wrong with getting the removed peg position");
                 return false;
@@ -84,17 +95,22 @@ peggame.Board = function () {
         }
     };
 
-    // set the game_state as in progress or end
-    // return -1 if in progress,
-    // return remaining pegs if end.
-    //
-    // todo: need to incorporate this into move_pegs?
-    this.calculate_board_state = function() {
-        var remaining_pegs = 0;
+    // Is the game still in progress or over?
+    // return true for yes, false for no
+    this.is_the_game_over = function() {
+        // base assumption: the game is over.
+        // easier to falsify this than prove it.
         var in_progress = false;
+        
+        // check each peg that's still on game board
+        // get its available moves
         $.each(game_board, function(key, value) {
             if (value) {
                 var moves_available = value.get_moves_available();
+
+                // check the position of the available moves on the board
+                // if they're not taken, then there are still moves left for at least one peg.
+                // so set the state to in_progress and return false at the first instance of an available move.
                 $.each(moves_available, function(key2, value2) {
                     if (game_board[value2]) {
                         game_state = peggame.globals.STATE.IN_PROGRESS;
@@ -102,29 +118,24 @@ peggame.Board = function () {
                         return false; 
                     }
                 });
-                remaining_pegs++;
 
             }
         });
 
-        if (in_progress) {
-            return remaining_pegs;
-        }
-
-        if (game_state !== peggame.globals.STATE.NOT_STARTED) {
+        // if you got here, the game is over
+        if (!in_progress && (game_state !== peggame.globals.STATE.NOT_STARTED)) {
             game_state = peggame.globals.STATE.END;
-            this.end_game(remaining_pegs);
-            return false;
+            return true;
         }
     };
 
     this.out = function() {
-        $("#main").append(  "remaining_pegs: " + this.calculate_board_state() + "<br/>" +
+        $("#main").append(  "remaining_pegs: " + remaining_pegs + "<br/>" +
                             "game_state: " + game_state + "<br/>" + 
                             JSON.stringify(game_board) + "<br/><br/>");
     };
 
-    this.end_game = function(remaining_pegs) {
+    this.end_game = function() {
         if (remaining_pegs >= 4) {
             $("#main").append(  "<p>Over 3 pieces left!</p> " + 
                                 "<p>You are an <strong>EG-NO-RA-MOOSE</strong></p>");
