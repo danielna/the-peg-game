@@ -34,11 +34,10 @@ peggame.Board = function () {
 
     this.start_game = function(initial_open_position) { 
         this.reset();
-
         this.out();
-        var that = this;
-
         game_state  = peggame.globals.STATE.IN_PROGRESS;
+
+        var that = this;
 
         $.each(game_board, function(key, value) {
             var peg = new peggame.Peg();
@@ -118,7 +117,6 @@ peggame.Board = function () {
                         return false; 
                     }
                 });
-
             }
         });
 

@@ -26,11 +26,11 @@ peggame.Peg = function () {
 
     this.get_position = function() {
         return position;
-    }
+    };
 
     this.set_position = function(set_position){
         position = set_position;
-    }
+    };
 
     // 
     this.move_peg_return_removed = function(new_position) {
