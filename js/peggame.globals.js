@@ -36,14 +36,16 @@ peggame.globals = {
             D: {
                     A: "B",
                     K: "G",
+                    F: "E",
                     M: "H"
             }, 
             E: {
-                    N: "H",
-                    L: "I"
+                    N: "I",
+                    L: "H"
             }, 
             F: {
                     A: "C",
+                    D: "E",
                     M: "I",
                     O: "J"
             }, 

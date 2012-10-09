@@ -28,14 +28,18 @@ peggame.Peg = function () {
         return position;
     }
 
+    this.set_position = function(set_position){
+        position = set_position;
+    }
+
     // 
     this.move_peg_return_removed = function(new_position) {
         this.calculate_moves_available();
-        console.info("moves_avail:", JSON.stringify(moves_available));
-        console.info("old:", position);
-        console.info("new_position:", new_position);
+        // console.info("moves_avail:", JSON.stringify(moves_available));
+        // console.info("old:", position);
+        // console.info("new_position:", new_position);
+        // console.info("removed:", moves_available[new_position]);
         if (moves_available[new_position]) {
-            console.info("Return removed:", moves_available[new_position]);
             return moves_available[new_position];
         } else {
             console.info("Error!", "move_peg_return_removed returns nothing");

@@ -21,7 +21,7 @@ peggame.Board = function () {
         game_board = {};
     
     this.reset = function() {
-        game_state              = peggame.globals.STATE.IN_PROGRESS,
+        game_state              = peggame.globals.STATE.NOT_STARTED,
         game_board              = { 
             A: null, B: null, C: null, 
             D: null, E: null, F: null, 
@@ -34,13 +34,19 @@ peggame.Board = function () {
     this.start_game = function(initial_open_position) { 
         this.reset();
 
+        this.out();
+        var that = this;
+
+        game_state  = peggame.globals.IN_PROGRESS
+
         $.each(game_board, function(key, value) {
-            game_board[key] = new peggame.Peg();
+            var peg = new peggame.Peg();
+            that.add_peg(peg, key);
             game_board[key].init(key);
         });
 
         if (initial_open_position) {
-            game_board[initial_open_position] = null;
+            that.remove_peg(initial_open_position);
         }
 
     };
@@ -58,14 +64,13 @@ peggame.Board = function () {
     this.move_peg = function(old_pos, new_pos) {
         if (game_board[old_pos]) {
             var peg = game_board[old_pos];
-            console.info("old_pos:", old_pos);
-            console.info(" and new_pos:", new_pos);
-            var result = peg.move_peg_return_removed(new_pos);
+            var removed_peg = peg.move_peg_return_removed(new_pos);
             
-            if (result !== "") {
+            if (removed_peg !== "") {
                 game_board[new_pos] = game_board[old_pos];
-                game_board[old_pos] = null;
-                game_board[result] = null;
+                game_board[new_pos].set_position(new_pos);
+                this.remove_peg(old_pos);
+                this.remove_peg(removed_peg);
                 this.out();
                 return true;
             } else {
@@ -86,28 +91,55 @@ peggame.Board = function () {
     // todo: need to incorporate this into move_pegs?
     this.calculate_board_state = function() {
         var remaining_pegs = 0;
+        var in_progress = false;
         $.each(game_board, function(key, value) {
-            if (game_board[key]) {
-                var moves_available = game_board[key].get_moves_available();
+            if (value) {
+                var moves_available = value.get_moves_available();
                 $.each(moves_available, function(key2, value2) {
-                    if (game_board[moves_available[key2]]) {
+                    if (game_board[value2]) {
                         game_state = peggame.globals.STATE.IN_PROGRESS;
-                        return -1; 
+                        in_progress = true;
+                        return false; 
                     }
                 });
                 remaining_pegs++;
+
             }
         });
 
-        // todo: this is screwed up
-        game_state = peggame.globals.STATE.END;
-        return remaining_pegs;
+        if (in_progress) {
+            return remaining_pegs;
+        }
+
+        if (game_state !== peggame.globals.STATE.NOT_STARTED) {
+            game_state = peggame.globals.STATE.END;
+            this.end_game(remaining_pegs);
+            return false;
+        }
     };
 
     this.out = function() {
         $("#main").append(  "remaining_pegs: " + this.calculate_board_state() + "<br/>" +
                             "game_state: " + game_state + "<br/>" + 
-                            JSON.stringify(game_board) + "<br/>");
+                            JSON.stringify(game_board) + "<br/><br/>");
+    };
+
+    this.end_game = function(remaining_pegs) {
+        if (remaining_pegs >= 4) {
+            $("#main").append(  "<p>Over 3 pieces left!</p> " + 
+                                "<p>You are an <strong>EG-NO-RA-MOOSE</strong></p>");
+        } else if (remaining_pegs === 3) {
+            $("#main").append(  "<p>3 pieces left!</p> " + 
+                                "<p>You are <strong>JUST PLAIN DUMB</strong></p>");
+        } else if (remaining_pegs === 2) {
+            $("#main").append(  "<p>2 pieces left!</p> " + 
+                                "<p>You are <strong>PRETTY SMART</strong></p>");
+        } else if (remaining_pegs === 1) {
+            $("#main").append(  "<p>1 pieces left!</p> " + 
+                                "<p>You are a <strong>GENIUS!</strong></p>");
+        } else {
+            throw "Something went wrong at the end of the game!";
+        }
     };
 
     return this;
