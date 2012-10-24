@@ -77,6 +77,8 @@ peggame.Board = function () {
                 this.reassign_peg(old_pos, new_pos);
                 this.remove_peg(removed_peg);
                 this.out();
+
+                // after moving/removing, check if the game is over
                 if (this.is_the_game_over()){
                     this.end_game();
                 }
@@ -98,7 +100,7 @@ peggame.Board = function () {
     // return true for yes, false for no
     this.is_the_game_over = function() {
         // base assumption: the game is over.
-        // easier to falsify this than prove it.
+        // easier/faster to falsify this than prove it.
         var in_progress = false;
         
         // check each peg that's still on game board
@@ -120,7 +122,7 @@ peggame.Board = function () {
             }
         });
 
-        // if you got here, the game is over
+        // if you got here, the game is over... as long as the game has started
         if (!in_progress && (game_state !== peggame.globals.STATE.NOT_STARTED)) {
             game_state = peggame.globals.STATE.END;
             return true;

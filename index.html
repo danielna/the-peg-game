@@ -8,7 +8,53 @@
         #main { 
             width: 800px; 
             height: 800px;
+            position: relative;
+            background-color: #FFD7A0;
         }
+
+        .peg {
+            display: inline-block;
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border: 5px inset red;
+            -webkit-border-radius: 15px;
+            -moz-border-radius: 15px;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        #A { top: 10px; left: 395px; }
+        
+        #B { top: 40px; left: 375px; }
+        #C { top: 40px; left: 415px; }
+
+        #D { top: 70px; left: 355px; }
+        #E { top: 70px; left: 395px; }
+        #F { top: 70px; left: 435px; }
+
+        #G { top: 100px; left: 335px; }
+        #H { top: 100px; left: 375px; }
+        #I { top: 100px; left: 415px; }
+        #J { top: 100px; left: 455px; }
+
+        #K { top: 130px; left: 315px; }
+        #L { top: 130px; left: 355px; }
+        #M { top: 130px; left: 395px; }
+        #N { top: 130px; left: 435px; }
+        #O { top: 130px; left: 475px; }
+
+        .empty {
+            border-color: gray;
+            background-color: gray;
+            cursor: pointer;
+        }
+        .active {
+            border-color: #2EF7F7;
+            background-color: #2EF7F7;
+        }
+
     </STYLE>
 
 </head>
@@ -16,7 +62,34 @@
     <h1>The Peg Game</h1>
     
     <div id="main">
-        
+        <div class="pegs">
+            <div id="A" class="peg"></div>
+
+            <div id="B" class="peg"></div>
+            <div id="C" class="peg"></div>
+
+            <div id="D" class="peg"></div>
+            <div id="E" class="peg"></div>
+            <div id="F" class="peg"></div>
+
+            <div id="G" class="peg"></div>
+            <div id="H" class="peg"></div>
+            <div id="I" class="peg"></div>
+            <div id="J" class="peg"></div>
+
+            <div id="K" class="peg"></div>
+            <div id="L" class="peg"></div>
+            <div id="M" class="peg"></div>
+            <div id="N" class="peg"></div>
+            <div id="O" class="peg empty"></div>
+        </div>
+
+        <div class="meta">
+            <div id="pegs-remaining-container"><span></span> pegs remaining!</div>
+            <div id="end-message">You have not started.</div>
+        </div>
+
+
     </div>
 
     <!-- javascript -->
@@ -25,6 +98,8 @@
     <script type="text/javascript" src="js/peggame.board.js"></script>
     <script type="text/javascript" src="js/peggame.peg.js"></script>
     <script type="text/javascript" src="js/peggame.main.js"></script>
+    <script type="text/javascript" src="js/peggame.interaction.js"></script>
+
 
 </body>
 </html>

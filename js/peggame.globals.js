@@ -91,7 +91,7 @@ peggame.globals = {
         if (move_map[position]) {
             return move_map[position];
         } else {
-            throw "No move for that position";
+            throw "No move for that position:" + position;
         }
     }
 

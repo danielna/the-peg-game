@@ -2,6 +2,8 @@ $(document).ready(function() {
 
     var pegBoard = new peggame.Board();
 
+    
+
     // the following moves result in a game that ends in 3 pieces.
     // commented letters are the pegs removed at each step.
 
