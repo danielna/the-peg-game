@@ -51,19 +51,31 @@ peggame.Board = function () {
 
     };
 
+    this.get_peg = function(position) {
+        return game_board[position];
+    };
+
     this.add_peg = function(peg, position) {
         game_board[position] = peg;
+
+        $("#" + position).addClass("on");
     };
 
     this.remove_peg = function(position) {
         game_board[position] = null;
         remaining_pegs--;
+
+        $("#" + position).removeClass("on");
+
     };
 
     this.reassign_peg = function(old_pos, new_pos) {
         game_board[new_pos] = game_board[old_pos];
         game_board[new_pos].set_position(new_pos);
         game_board[old_pos] = null;
+        
+        $("#" + new_pos).addClass("on");
+        $("#" + old_pos).removeClass("on");
     };
 
     // if you can move it, recalc the board and return true.
@@ -130,23 +142,23 @@ peggame.Board = function () {
     };
 
     this.out = function() {
-        $("#main").append(  "remaining_pegs: " + remaining_pegs + "<br/>" +
-                            "game_state: " + game_state + "<br/>" + 
-                            JSON.stringify(game_board) + "<br/><br/>");
+        $("#pegs-remaining-container span").html(remaining_pegs);
+        $("#status").html(game_state);
     };
 
     this.end_game = function() {
+        var endContainer = $("#end-message");
         if (remaining_pegs >= 4) {
-            $("#main").append(  "<p>Over 3 pieces left!</p> " + 
+            $("#end-message").append(  "<p>Over 3 pieces left!</p> " + 
                                 "<p>You are an <strong>EG-NO-RA-MOOSE</strong></p>");
         } else if (remaining_pegs === 3) {
-            $("#main").append(  "<p>3 pieces left!</p> " + 
+            $("#end-message").append(  "<p>3 pieces left!</p> " + 
                                 "<p>You are <strong>JUST PLAIN DUMB</strong></p>");
         } else if (remaining_pegs === 2) {
-            $("#main").append(  "<p>2 pieces left!</p> " + 
+            $("#end-message").append(  "<p>2 pieces left!</p> " + 
                                 "<p>You are <strong>PRETTY SMART</strong></p>");
         } else if (remaining_pegs === 1) {
-            $("#main").append(  "<p>1 pieces left!</p> " + 
+            $("#end-message").append(  "<p>1 pieces left!</p> " + 
                                 "<p>You are a <strong>GENIUS!</strong></p>");
         } else {
             throw "Something went wrong at the end of the game!";

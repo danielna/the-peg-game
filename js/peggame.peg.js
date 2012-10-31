@@ -30,6 +30,7 @@ peggame.Peg = function () {
 
     this.set_position = function(set_position){
         position = set_position;
+        this.calculate_moves_available();
     };
 
     // 

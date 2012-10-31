@@ -17,8 +17,8 @@
             position: absolute;
             width: 20px;
             height: 20px;
-            background-color: red;
-            border: 5px inset red;
+            background-color: gray;
+            border: 5px inset gray;
             -webkit-border-radius: 15px;
             -moz-border-radius: 15px;
             border-radius: 15px;
@@ -45,14 +45,17 @@
         #N { top: 130px; left: 435px; }
         #O { top: 130px; left: 475px; }
 
-        .empty {
-            border-color: gray;
-            background-color: gray;
-            cursor: pointer;
+        .on {
+            border-color: red;
+            background-color: red;
         }
         .active {
             border-color: #2EF7F7;
             background-color: #2EF7F7;
+        }
+        .possible-move {
+            border-color: yellow;
+            background-color: yellow;
         }
 
     </STYLE>
@@ -81,12 +84,13 @@
             <div id="L" class="peg"></div>
             <div id="M" class="peg"></div>
             <div id="N" class="peg"></div>
-            <div id="O" class="peg empty"></div>
+            <div id="O" class="peg"></div>
         </div>
 
         <div class="meta">
             <div id="pegs-remaining-container"><span></span> pegs remaining!</div>
-            <div id="end-message">You have not started.</div>
+            <div id="status">You have not started.</div>
+            <div id="end-message"></div>
         </div>
 
 
@@ -98,8 +102,6 @@
     <script type="text/javascript" src="js/peggame.board.js"></script>
     <script type="text/javascript" src="js/peggame.peg.js"></script>
     <script type="text/javascript" src="js/peggame.main.js"></script>
-    <script type="text/javascript" src="js/peggame.interaction.js"></script>
-
 
 </body>
 </html>

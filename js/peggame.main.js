@@ -2,63 +2,55 @@ $(document).ready(function() {
 
     var pegBoard = new peggame.Board();
 
-    
-
-    // the following moves result in a game that ends in 3 pieces.
-    // commented letters are the pegs removed at each step.
-
-    // pegBoard.start_game("A");
-
-    // pegBoard.move_peg("D", "A"); //B
-
-    // pegBoard.move_peg("K", "D"); //G
-
-    // pegBoard.move_peg("M", "K"); //L
-
-    // pegBoard.move_peg("O", "M"); //N
-
-    // pegBoard.move_peg("F", "O"); //J
-
-    // pegBoard.move_peg("A", "F"); //C
-
-    // pegBoard.move_peg("E", "L"); //H
-
-    // pegBoard.move_peg("L", "N"); //M
-
-    // pegBoard.move_peg("F", "M"); //I
-
-    // pegBoard.move_peg("N", "L"); //M
-
-    // pegBoard.move_peg("K", "M"); //L
+    // todo: select a starting position
+    pegBoard.start_game("O");
 
 
+    //
+    // Clicking pegs runs the show
+    //
+    $(".pegs .peg").on("click", function() {
+        
+        var thisPeg = $(this);
+        var thisId = thisPeg.attr("id");
+
+        if (thisPeg.hasClass("possible-move")) {
+            
+            var activeId = $(".peg.active").attr("id");
+            pegBoard.move_peg(activeId, thisId);
+            clear_moves();
+
+        } else if (thisPeg.hasClass("on") && !thisPeg.hasClass("active")) {
+            
+            clear_moves();
+            $(this).toggleClass("active");    
+            var peg = pegBoard.get_peg(thisId);
+            var possible_moves = peg.get_moves_available();
+            highlight_possible_moves(possible_moves);
+
+        } else if (thisPeg.hasClass("active")) {
+            
+            clear_moves();
+
+        }
+    });
 
 
-    // and two end pieces!  also a different start point.
-    // pegBoard.start_game("B");
+    //
+    // Helper functions
+    //
+    var highlight_possible_moves = function(possible_moves) {
+        $.each(possible_moves, function(key, value) {
+            var possible = $("#" + key);
+            var taken = $("#" + value);
+            if (!possible.hasClass("on") && taken.hasClass("on")) {
+                possible.toggleClass("possible-move");
+            }
+        });
+    };
 
-    // pegBoard.move_peg("G", "B"); //D
-
-    // pegBoard.move_peg("F", "D"); //E
-
-    // pegBoard.move_peg("O", "F"); //J
-
-    // pegBoard.move_peg("B", "G"); //D
-
-    // pegBoard.move_peg("L", "E"); //H
-
-    // pegBoard.move_peg("F", "D"); //E
-
-    // pegBoard.move_peg("N", "L"); //M
-
-    // pegBoard.move_peg("K", "M"); //L
-
-    // pegBoard.move_peg("M", "F"); //I
-
-    // pegBoard.move_peg("G", "B"); //D
-
-    // pegBoard.move_peg("A", "D"); //B
-
-    // pegBoard.move_peg("C", "J"); //F
+    var clear_moves = function() {
+        $(".pegs .peg").removeClass("possible-move active");
+    };
 
 });
