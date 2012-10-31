@@ -28,10 +28,8 @@ $(document).ready(function() {
             var possible_moves = peg.get_moves_available();
             highlight_possible_moves(possible_moves);
 
-        } else if (thisPeg.hasClass("active")) {
-            
+        } else if (thisPeg.hasClass("active")) {           
             clear_moves();
-
         }
     });
 

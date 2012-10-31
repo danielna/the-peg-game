@@ -92,18 +92,20 @@ peggame.Board = function () {
 
                 // after moving/removing, check if the game is over
                 if (this.is_the_game_over()){
+                    game_state = peggame.globals.STATE.END;
+                    this.out();
                     this.end_game();
                 }
                 
                 return true;
             
             } else {
-                console.info("move_peg", "something went wrong with getting the removed peg position");
+                console.error("move_peg", "something went wrong with getting the removed peg position");
                 return false;
             }
 
         } else {
-            console.info("move_peg", "something went wrong with old_pos");
+            console.error("move_peg", "something went wrong with old_pos");
             return false;
         }
     };
@@ -149,19 +151,19 @@ peggame.Board = function () {
     this.end_game = function() {
         var endContainer = $("#end-message");
         if (remaining_pegs >= 4) {
-            $("#end-message").append(  "<p>Over 3 pieces left!</p> " + 
+            endContainer.append(  "<p>Over 3 pieces left!</p> " + 
                                 "<p>You are an <strong>EG-NO-RA-MOOSE</strong></p>");
         } else if (remaining_pegs === 3) {
-            $("#end-message").append(  "<p>3 pieces left!</p> " + 
+            endContainer.append(  "<p>3 pieces left!</p> " + 
                                 "<p>You are <strong>JUST PLAIN DUMB</strong></p>");
         } else if (remaining_pegs === 2) {
-            $("#end-message").append(  "<p>2 pieces left!</p> " + 
+            endContainer.append(  "<p>2 pieces left!</p> " + 
                                 "<p>You are <strong>PRETTY SMART</strong></p>");
         } else if (remaining_pegs === 1) {
-            $("#end-message").append(  "<p>1 pieces left!</p> " + 
+            endContainer.append(  "<p>1 pieces left!</p> " + 
                                 "<p>You are a <strong>GENIUS!</strong></p>");
         } else {
-            throw "Something went wrong at the end of the game!";
+            console.error("Something went wrong at the end of the game!");
         }
     };
 
