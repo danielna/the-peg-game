@@ -1,0 +1,107 @@
+
+header {
+    display: block;
+    float: left;
+    position: relative;
+    width: 100%;
+    padding: 40px 0 20px;
+    text-align: center;
+}
+header h1 {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+}
+
+.wrapper {
+    display: block;
+    position: relative;
+    text-align: center;
+    width: 100%;
+    float: left;
+}
+
+.main { 
+    position: relative;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.meta {
+    display: block;
+    float: left;
+    position: relative;
+    width: 100px;
+    border: 1px solid #999;
+    padding: 20px;
+}
+
+#status {
+    margin-top: 10px;
+}
+
+#end-message {
+    position: relative;
+    display: inline-block;
+    float: left;
+    clear: both;
+    width: 100%;
+
+}
+
+.pegs {
+    position: relative;
+    float: left;
+    display: block;
+    height: 180px;
+    width: 230px;
+    border: 1px solid green;
+    margin: 0 auto;
+    background-color: #FFD7A0;
+}
+
+.peg {
+    display: inline-block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: gray;
+    border: 5px inset gray;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+#A { top: 10px; left: 100px; }
+
+#B { top: 40px; left: 80px; }
+#C { top: 40px; left: 120px; }
+
+#D { top: 70px; left: 60px; }
+#E { top: 70px; left: 100px; }
+#F { top: 70px; left: 140px; }
+
+#G { top: 100px; left: 40px; }
+#H { top: 100px; left: 80px; }
+#I { top: 100px; left: 120px; }
+#J { top: 100px; left: 160px; }
+
+#K { top: 130px; left: 20px; }
+#L { top: 130px; left: 60px; }
+#M { top: 130px; left: 100px; }
+#N { top: 130px; left: 140px; }
+#O { top: 130px; left: 180px; }
+
+.on {
+    border-color: red;
+    background-color: red;
+}
+.active {
+    border-color: #2EF7F7;
+    background-color: #2EF7F7;
+}
+.possible-move {
+    border-color: yellow;
+    background-color: yellow;
+}

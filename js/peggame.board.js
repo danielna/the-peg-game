@@ -126,8 +126,9 @@ peggame.Board = function () {
                 // check the position of the available moves on the board
                 // if they're not taken, then there are still moves left for at least one peg.
                 // so set the state to in_progress and return false at the first instance of an available move.
+                // for a move to be "available", the taken peg must exist and the potential move must not be taken.
                 $.each(moves_available, function(key2, value2) {
-                    if (game_board[value2]) {
+                    if (game_board[value2] && (!game_board[key2])) {
                         game_state = peggame.globals.STATE.IN_PROGRESS;
                         in_progress = true;
                         return false; 
@@ -145,23 +146,27 @@ peggame.Board = function () {
 
     this.out = function() {
         $("#pegs-remaining-container span").html(remaining_pegs);
-        $("#status").html(game_state);
+        $("#status span").html(game_state);
     };
 
     this.end_game = function() {
         var endContainer = $("#end-message");
         if (remaining_pegs >= 4) {
             endContainer.append(  "<p>Over 3 pieces left!</p> " + 
-                                "<p>You are an <strong>EG-NO-RA-MOOSE</strong></p>");
+                                "<p>You are an <strong>EEG-NO-RA-MOOSE</strong></p>" + 
+                                "<img src='img/moose.jpg'/>");
         } else if (remaining_pegs === 3) {
             endContainer.append(  "<p>3 pieces left!</p> " + 
-                                "<p>You are <strong>JUST PLAIN DUMB</strong></p>");
+                                "<p>You are <strong>JUST PLAIN DUMB</strong></p>" + 
+                                "<img src='img/dumb.jpg'/>");
         } else if (remaining_pegs === 2) {
             endContainer.append(  "<p>2 pieces left!</p> " + 
-                                "<p>You are <strong>PRETTY SMART</strong></p>");
+                                "<p>You are <strong>PRETTY SMART</strong></p>" + 
+                                "<img src='img/prettysmart.jpg'/>");
         } else if (remaining_pegs === 1) {
             endContainer.append(  "<p>1 pieces left!</p> " + 
-                                "<p>You are a <strong>GENIUS!</strong></p>");
+                                "<p>You are a <strong>GENIUS!</strong></p>" + 
+                                "<img src='img/genius.jpg'/>");
         } else {
             console.error("Something went wrong at the end of the game!");
         }

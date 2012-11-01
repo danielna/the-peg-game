@@ -3,105 +3,56 @@
 <head> 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
     <title>The Peg Game</title>
-
-    <STYLE type="text/css">
-        #main { 
-            width: 800px; 
-            height: 800px;
-            position: relative;
-            background-color: #FFD7A0;
-        }
-
-        .peg {
-            display: inline-block;
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: gray;
-            border: 5px inset gray;
-            -webkit-border-radius: 15px;
-            -moz-border-radius: 15px;
-            border-radius: 15px;
-            cursor: pointer;
-        }
-
-        #A { top: 10px; left: 395px; }
-        
-        #B { top: 40px; left: 375px; }
-        #C { top: 40px; left: 415px; }
-
-        #D { top: 70px; left: 355px; }
-        #E { top: 70px; left: 395px; }
-        #F { top: 70px; left: 435px; }
-
-        #G { top: 100px; left: 335px; }
-        #H { top: 100px; left: 375px; }
-        #I { top: 100px; left: 415px; }
-        #J { top: 100px; left: 455px; }
-
-        #K { top: 130px; left: 315px; }
-        #L { top: 130px; left: 355px; }
-        #M { top: 130px; left: 395px; }
-        #N { top: 130px; left: 435px; }
-        #O { top: 130px; left: 475px; }
-
-        .on {
-            border-color: red;
-            background-color: red;
-        }
-        .active {
-            border-color: #2EF7F7;
-            background-color: #2EF7F7;
-        }
-        .possible-move {
-            border-color: yellow;
-            background-color: yellow;
-        }
-
-    </STYLE>
-
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/peggame.css">
 </head>
 <body>
-    <h1>The Peg Game</h1>
+    <header>
+        <h1>The Peg Game</h1>
+    </header>
     
     <!-- ToDo: 
     - Make the UI fun
     - Move styles into a separate file
     - End of game state
     - Start by selecting an initial peg
-    - Reset the game after the end -->
+    - Reset the game after the end 
+    - Debug final calculation
+    -->
+    <div class="wrapper">
+        <div class="main">
+            <div class="meta">
+                <div id="pegs-remaining-container">
+                    <span></span> pegs remaining!
+                </div>
+                <div id="status">
+                    <strong>Status:</strong><br/>
+                    <span>You have not started.</span>
+                </div>
+            </div>
+            <div class="pegs">
+                <div id="A" class="peg"></div>
 
+                <div id="B" class="peg"></div>
+                <div id="C" class="peg"></div>
 
-    <div id="main">
-        <div class="pegs">
-            <div id="A" class="peg"></div>
+                <div id="D" class="peg"></div>
+                <div id="E" class="peg"></div>
+                <div id="F" class="peg"></div>
 
-            <div id="B" class="peg"></div>
-            <div id="C" class="peg"></div>
+                <div id="G" class="peg"></div>
+                <div id="H" class="peg"></div>
+                <div id="I" class="peg"></div>
+                <div id="J" class="peg"></div>
 
-            <div id="D" class="peg"></div>
-            <div id="E" class="peg"></div>
-            <div id="F" class="peg"></div>
-
-            <div id="G" class="peg"></div>
-            <div id="H" class="peg"></div>
-            <div id="I" class="peg"></div>
-            <div id="J" class="peg"></div>
-
-            <div id="K" class="peg"></div>
-            <div id="L" class="peg"></div>
-            <div id="M" class="peg"></div>
-            <div id="N" class="peg"></div>
-            <div id="O" class="peg"></div>
-        </div>
-
-        <div class="meta">
-            <div id="pegs-remaining-container"><span></span> pegs remaining!</div>
-            <div id="status">You have not started.</div>
+                <div id="K" class="peg"></div>
+                <div id="L" class="peg"></div>
+                <div id="M" class="peg"></div>
+                <div id="N" class="peg"></div>
+                <div id="O" class="peg"></div>
+            </div>
             <div id="end-message"></div>
         </div>
-
-
     </div>
 
     <!-- javascript -->
