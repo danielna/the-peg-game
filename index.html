@@ -5,12 +5,10 @@
     <title>The Peg Game</title>
     <link rel="stylesheet" type="text/css" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/peggame.css">
+    <link href='http://fonts.googleapis.com/css?family=Lato:900' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
-    <header>
-        <h1>The Peg Game</h1>
-    </header>
-    
     <!-- ToDo: 
     - Make the UI fun
     - Move styles into a separate file
@@ -20,16 +18,16 @@
     - Debug final calculation
     -->
     <div class="wrapper">
-        <div class="main">
-            <div class="meta">
-                <div id="pegs-remaining-container">
-                    <span></span> pegs remaining!
-                </div>
-                <div id="status">
-                    <strong>Status:</strong><br/>
-                    <span>You have not started.</span>
-                </div>
+        <div class="meta">
+            <div id="pegs-remaining-container">
+                <span></span> pegs remaining!
             </div>
+        </div>
+        <div id="status">
+            <strong>Status:</strong>
+            <span>You have not started.</span>
+        </div>
+        <div class="main">     
             <div class="pegs">
                 <div id="A" class="peg"></div>
 
@@ -51,7 +49,12 @@
                 <div id="N" class="peg"></div>
                 <div id="O" class="peg"></div>
             </div>
-            <div id="end-message"></div>
+            <div id="end-message">
+                <p>Over 3 pieces left!</p>
+                <p>You are an <strong>EEG-NO-RA-MOOSE</strong></p>
+                <img src='img/moose.jpg'/>
+
+            </div>
         </div>
     </div>
 

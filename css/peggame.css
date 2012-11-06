@@ -1,10 +1,13 @@
+body {
+    background: url("../img/bg_green.jpg") repeat;
+}
 
 header {
     display: block;
     float: left;
     position: relative;
     width: 100%;
-    padding: 40px 0 20px;
+    padding: 0 0 20px;
     text-align: center;
 }
 header h1 {
@@ -15,10 +18,12 @@ header h1 {
 
 .wrapper {
     display: block;
+    margin: 0 auto;
+    padding: 25px 0px;
+    width: 550px;
     position: relative;
     text-align: center;
-    width: 100%;
-    float: left;
+    
 }
 
 .main { 
@@ -30,14 +35,28 @@ header h1 {
 .meta {
     display: block;
     float: left;
-    position: relative;
-    width: 100px;
-    border: 1px solid #999;
+    position: absolute;
+    border: 0px;
     padding: 20px;
+    font-family: "Lato", Verdana;
+    color: #fff;
 }
 
+.meta span { 
+    font-size: 72px;
+    font-weight: bolder;
+    display: block;
+}
+
+
 #status {
+    position: absolute;
+    right: 0;
+    color: #fff;
+    font-family: "Droid Sans", Verdana;
     margin-top: 10px;
+    padding: 25px;
+    font-size: 18px;
 }
 
 #end-message {
@@ -46,56 +65,69 @@ header h1 {
     float: left;
     clear: both;
     width: 100%;
-
+    font-family: "Lato", Verdana;
+    font-size: 24px;
+    color: #fff;
+}
+#end-message p {
+    margin: 5px auto;
 }
 
 .pegs {
-    position: relative;
+    background: url("../img/board.png") no-repeat 20px 0px transparent;   
     float: left;
     display: block;
-    height: 180px;
-    width: 230px;
-    border: 1px solid green;
-    margin: 0 auto;
-    background-color: #FFD7A0;
+    margin: -5px auto 0;
+    width: 400px;
+    height: 300px;
 }
 
 .peg {
     display: inline-block;
     position: absolute;
-    width: 20px;
-    height: 20px;
     background-color: gray;
     border: 5px inset gray;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
     border-radius: 15px;
-    cursor: pointer;
+    background-color: gray;
+    margin: 7px 0px 0 7px;
+
 }
 
-#A { top: 10px; left: 100px; }
+#A { top: 15px; left: 180px; }
 
-#B { top: 40px; left: 80px; }
-#C { top: 40px; left: 120px; }
+#B { top: 65px; left: 145px; }
+#C { top: 65px; left: 215px; }
 
-#D { top: 70px; left: 60px; }
-#E { top: 70px; left: 100px; }
-#F { top: 70px; left: 140px; }
+#D { top: 115px; left: 110px; }
+#E { top: 115px; left: 180px; }
+#F { top: 115px; left: 250px; }
 
-#G { top: 100px; left: 40px; }
-#H { top: 100px; left: 80px; }
-#I { top: 100px; left: 120px; }
-#J { top: 100px; left: 160px; }
+#G { top: 165px; left: 75px; }
+#H { top: 165px; left: 145px; }
+#I { top: 165px; left: 215px; }
+#J { top: 165px; left: 285px; }
 
-#K { top: 130px; left: 20px; }
-#L { top: 130px; left: 60px; }
-#M { top: 130px; left: 100px; }
-#N { top: 130px; left: 140px; }
-#O { top: 130px; left: 180px; }
+#K { top: 215px; left: 40px; }
+#L { top: 215px; left: 110px; }
+#M { top: 215px; left: 180px; }
+#N { top: 215px; left: 250px; }
+#O { top: 215px; left: 320px; }
 
 .on {
     border-color: red;
     background-color: red;
+    width: 30px;
+    height: 30px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    border: 8px inset red;
+    margin: 0;
 }
 .active {
     border-color: #2EF7F7;
