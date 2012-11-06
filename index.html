@@ -11,11 +11,9 @@
 <body>
     <!-- ToDo: 
     - Make the UI fun
-    - Move styles into a separate file
     - End of game state
     - Start by selecting an initial peg
     - Reset the game after the end 
-    - Debug final calculation
     -->
     <div class="wrapper">
         <div class="meta">
@@ -49,11 +47,10 @@
                 <div id="N" class="peg"></div>
                 <div id="O" class="peg"></div>
             </div>
+            <div id="reset-game" style="display: none;">
+                <button id="reset-button" type="button" name="reset" value="" class="css3button">Reset Game</button>
+            </div>
             <div id="end-message">
-                <p>Over 3 pieces left!</p>
-                <p>You are an <strong>EEG-NO-RA-MOOSE</strong></p>
-                <img src='img/moose.jpg'/>
-
             </div>
         </div>
     </div>

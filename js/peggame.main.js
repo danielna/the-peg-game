@@ -4,7 +4,7 @@ $(document).ready(function() {
 
     // todo: select a starting position
     pegBoard.start_game("O");
-
+    
 
     //
     // Clicking pegs runs the show
@@ -32,6 +32,24 @@ $(document).ready(function() {
             clear_moves();
         }
     });
+
+    $("#reset-button").on("click", function() {
+        reset_game();
+    });
+
+    // todo: refactor this
+    var reset_game = function () {
+        $(".peg").removeClass("possible-move active on");
+        $(".peg").addClass("on");
+        $("#pegs-remaining-container > span").text("");
+        $("#status span").text("You have not started");
+        $("#end-message").html("");
+        $("#reset-game").hide();
+
+        $("#O").removeClass("on");
+        pegBoard = new peggame.Board();
+        pegBoard.start_game("O");
+    };
 
 
     //

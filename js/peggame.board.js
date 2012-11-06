@@ -151,6 +151,7 @@ peggame.Board = function () {
 
     this.end_game = function() {
         var endContainer = $("#end-message");
+        $("#reset-game").show();
         if (remaining_pegs >= 4) {
             endContainer.append(  "<p>Over 3 pieces left!</p> " + 
                                 "<p>You are an <strong>EEG-NO-RA-MOOSE</strong></p>" + 
