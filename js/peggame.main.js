@@ -5,6 +5,21 @@ $(document).ready(function() {
     // todo: select a starting position
     pegBoard.start_game("O");
     
+    //
+    // Help
+    $('#help-me').avgrund({
+        height: 300,
+        holderClass: 'custom',
+        showClose: true,
+        showCloseText: 'Close',
+        enableStackAnimation: true,
+        onBlurContainer: '.wrapper',
+        template: '<h2>The Peg Game</h2>' +
+        '<p>Inspired by the mental anguish of the popular Cracker Barrel game.</p>' + 
+        '<p>The goal is to have one peg remaining.</p>' + 
+        '<p>Remove pegs by jumping over them.  Red pegs are clickable, and yellow areas designate possible moves.</p>' + 
+        '<p>View the source on <a href="https://github.com/danielna/the-peg-game" title="Github" target="_blank">github.</a> It\'s a continual work in progress. </p>'
+    });
 
     //
     // Clicking pegs runs the show

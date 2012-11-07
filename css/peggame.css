@@ -2,18 +2,33 @@ body {
     background: url("../img/bg_green.jpg") repeat;
 }
 
-header {
+a#help-me {
+    position: absolute;
+    top: -10px;
+    left: 30%;
     display: block;
-    float: left;
-    position: relative;
-    width: 100%;
-    padding: 0 0 20px;
-    text-align: center;
+    padding-top: 10px;
+    padding-left: 15px;
+    height: 30px;
+    width: 50px;
+    background-color: yellow;
+    border: 3px solid black;
+    border-top: 0px;
+    text-decoration: none;
+    -webkit-border-bottom-right-radius: 30px;
+    -webkit-border-bottom-left-radius: 30px;
+    -moz-border-radius-bottomright: 30px;
+    -moz-border-radius-bottomleft: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    z-index: 100;
+    transition: top 0.5s;
+    -moz-transition: top 0.5s; /* Firefox 4 */
+    -webkit-transition: top 0.5s; /* Safari and Chrome */
+    -o-transition: top 0.5s; /* Opera */
 }
-header h1 {
-    display: block;
-    position: relative;
-    margin: 0 auto;
+a#help-me:hover {
+    top: 0px;
 }
 
 .wrapper {
@@ -23,7 +38,7 @@ header h1 {
     width: 550px;
     position: relative;
     text-align: center;
-    
+    z-index: 10;
 }
 
 .main { 
@@ -179,4 +194,9 @@ button.css3button {
 .possible-move {
     border-color: yellow;
     background-color: yellow;
+}
+
+.custom {
+    border-radius: 3px 3px 3px 3px;
+    color: #555555;
 }
