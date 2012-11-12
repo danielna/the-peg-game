@@ -17,8 +17,8 @@ $(document).ready(function() {
         template: '<h2>The Peg Game</h2>' +
         '<p>Inspired by the mental anguish of the popular Cracker Barrel game.</p>' + 
         '<p>The goal is to have one peg remaining.</p>' + 
-        '<p>Remove pegs by jumping over them.  Red pegs are clickable, and yellow areas designate possible moves.</p>' + 
-        '<p>View the source on <a href="https://github.com/danielna/the-peg-game" title="Github" target="_blank">github.</a> It\'s a continual work in progress. </p>'
+        '<p>Remove pegs by jumping over them.  Red pegs are clickable, blue are active and yellow areas designate possible moves.</p>' + 
+        '<p>View the source on <a href="https://github.com/danielna/the-peg-game" title="Github" target="_blank">github</a>. It\'s a continual work in progress. </p>'
     });
 
     //

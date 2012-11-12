@@ -30,7 +30,7 @@ html, body {
     font-weight: bold;
     text-transform: uppercase;
     padding: 0;
-    margin: 10px 0 0 0;
+    margin: 0 0 0 0;
 }
 
 .avgrund-popin p {
@@ -41,8 +41,8 @@ html, body {
 
 .avgrund-close {
 	position: absolute;
-	top: 5px;
-	right: 5px;
+	top: 10px;
+	right: 10px;
 	text-indent: -999999px;
 	display: block;
 	height: 24px;

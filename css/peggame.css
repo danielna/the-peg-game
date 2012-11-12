@@ -4,12 +4,12 @@ body {
 
 a#help-me {
     position: absolute;
-    top: -10px;
+    top: -5px;
     left: 30%;
     display: block;
-    padding-top: 10px;
+    padding-top: 15px;
     padding-left: 15px;
-    height: 30px;
+    height: 35px;
     width: 50px;
     background-color: yellow;
     border: 3px solid black;
@@ -22,10 +22,10 @@ a#help-me {
     border-bottom-right-radius: 30px;
     border-bottom-left-radius: 30px;
     z-index: 100;
-    transition: top 0.5s;
-    -moz-transition: top 0.5s; /* Firefox 4 */
-    -webkit-transition: top 0.5s; /* Safari and Chrome */
-    -o-transition: top 0.5s; /* Opera */
+    transition: top 0.2s;
+    -moz-transition: top 0.2s; /* Firefox 4 */
+    -webkit-transition: top 0.2s; /* Safari and Chrome */
+    -o-transition: top 0.2s; /* Opera */
 }
 a#help-me:hover {
     top: 0px;
