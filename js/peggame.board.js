@@ -173,7 +173,18 @@ peggame.Board = function () {
         }
     };
 
-    return this;
+    return {
+        reset: this.reset,
+        start_game: this.start_game,
+        get_peg: this.get_peg,
+        add_peg: this.add_peg,
+        remove_peg: this.remove_peg,
+        reassign_peg: this.reassign_peg,
+        move_peg: this.move_peg,
+        out: this.out,
+        end_game: this.end_game,
+        is_the_game_over: this.is_the_game_over
+    };
 
 };
 })();

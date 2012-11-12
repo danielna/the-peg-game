@@ -44,6 +44,14 @@ peggame.Peg = function () {
         }
     };
 
+    return {
+        init: this.init,
+        calculate_moves_available: this.calculate_moves_available,
+        get_moves_available: this.get_moves_available,
+        get_position: this.get_position,
+        set_position: this.set_position,
+        move_peg_return_removed: this.move_peg_return_removed
+    };
 
 };
 })();
