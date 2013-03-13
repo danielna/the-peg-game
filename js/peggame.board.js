@@ -19,11 +19,145 @@ peggame.Board = function () {
     var 
         game_state = peggame.globals.STATE.NOT_STARTED,
         game_board = {},
-        remaining_pegs = 15;
+        remaining_pegs,
+        dom_pointers = {},
+        starting_position,
+        $peg,
+        $pegs_remaining_count,
+        $status_msg,
+        $end_message,
+        $reset_button,
+        $reset_game_container;
     
-    this.reset = function() {
-        game_state              = peggame.globals.STATE.NOT_STARTED,
-        game_board              = { 
+
+     /*
+      * Run the show.
+      * 
+      * Set jquery objects to cache.
+      * Set the initial open position and the click events.
+      */
+    var start_game = function(initial_open_position, set_dom_pointers) { 
+        var _this = this;
+        
+        starting_position = initial_open_position;
+        dom_pointers = set_dom_pointers;
+
+        $pegs = $(dom_pointers.pegs);
+        $pegs_remaining_count = $(dom_pointers.pegs_remaining_count);
+        $status_msg = $(dom_pointers.status_msg);
+        $end_message = $(dom_pointers.end_message);
+        $reset_button = $(dom_pointers.reset_button);
+        $reset_game_container = $(dom_pointers.reset_game_container);
+
+        remaining_pegs = 15;
+
+        reset();
+        out();
+        game_state = peggame.globals.STATE.IN_PROGRESS;
+
+        $.each(game_board, function(key, value) {
+            var peg = new peggame.Peg();
+            add_peg(peg, key);
+            game_board[key].init(key);
+        });
+
+        if (starting_position) {
+            remove_peg(starting_position);
+        }
+
+        if (!window.setClickEvents) {
+            manageClickEvents();
+        }
+    };
+
+
+     /*
+      * Let the board manage its own interactions.
+      */
+    var manageClickEvents = function() {
+
+        /** 
+         * Add peg click events
+         * 
+         * (1) If clicked peg is a possible move, move the currently active peg to this peg and clear all moves.
+         * (2) Else if clicked peg exists on the board and it's not currently active, activate it and highlight potential moves.
+         * (3) Else if clicked peg is active, user is deactivating it.  Clear all moves.
+         */
+         window.setClickEvents = true;
+
+        $pegs.on("click", function() {
+            
+            var $peg = $(this), //jq object
+                thisId = $peg.attr("id"),
+                activeId = $pegs.filter(".active").attr("id");
+
+            if ($peg.hasClass("possible-move")) {
+                
+                move_peg(activeId, thisId);
+                clear_moves();
+
+            } else if ($peg.hasClass("on") && !$peg.hasClass("active")) {
+                var peg = get_peg(thisId),  // object
+                    possible_moves = peg.get_moves_available();
+
+                clear_moves();
+                $peg.toggleClass("active");    
+                highlight_possible_moves(possible_moves);
+
+            } else if ($peg.hasClass("active")) {          
+
+                clear_moves();
+            
+            }
+        });
+
+        /*
+         * Highlight possible moves on the board, relative to the active peg.
+         */
+        var highlight_possible_moves = function(possible_moves) {
+            $.each(possible_moves, function(key, value) {
+                var possible = $("#" + key),
+                    taken = $("#" + value);
+
+                if (!possible.hasClass("on") && taken.hasClass("on")) {
+                    possible.toggleClass("possible-move");
+                }
+            });
+        };
+
+        /*
+         * Reset possible moves and the active peg from the board.
+         */
+        var clear_moves = function() {
+            $pegs.removeClass("possible-move active");
+        };
+
+
+        /** 
+         * Click the reset button
+         */
+        $reset_button.on("click", function() {
+            $pegs.removeClass("possible-move active on").addClass("on");
+            $pegs_remaining_count.text("");
+            $status_msg.text("Not Started");
+            $end_message.html("");
+            $reset_game_container.hide();
+            
+            reset();
+            $("#" + starting_position).removeClass("on");
+
+            start_game(starting_position, dom_pointers);
+        });
+
+    };
+
+
+    /** 
+     * Reset the board
+     */
+    var reset = function() {
+        game_state = peggame.globals.STATE.NOT_STARTED,
+        game_board  = { 
             A: null, B: null, C: null, 
             D: null, E: null, F: null, 
             G: null, H: null, I: null, 
@@ -32,36 +166,29 @@ peggame.Board = function () {
         };
     };
 
-    this.start_game = function(initial_open_position) { 
-        this.reset();
-        this.out();
-        game_state  = peggame.globals.STATE.IN_PROGRESS;
 
-        var that = this;
-
-        $.each(game_board, function(key, value) {
-            var peg = new peggame.Peg();
-            that.add_peg(peg, key);
-            game_board[key].init(key);
-        });
-
-        if (initial_open_position) {
-            that.remove_peg(initial_open_position);
-        }
-
-    };
-
-    this.get_peg = function(position) {
+    /** 
+     * Return the peg at a given position
+     */
+    var get_peg = function(position) {
         return game_board[position];
     };
 
-    this.add_peg = function(peg, position) {
+
+    /** 
+     * Add a peg at a given position
+     */
+    var add_peg = function(peg, position) {
         game_board[position] = peg;
 
         $("#" + position).addClass("on");
     };
 
-    this.remove_peg = function(position) {
+
+    /** 
+     * Remove a peg at a given position
+     */
+    var remove_peg = function(position) {
         game_board[position] = null;
         remaining_pegs--;
 
@@ -69,7 +196,12 @@ peggame.Board = function () {
 
     };
 
-    this.reassign_peg = function(old_pos, new_pos) {
+
+    /** 
+     * Reassign a peg to a new position.
+     * Assign the old position to null (empty).
+     */
+    var reassign_peg = function(old_pos, new_pos) {
         game_board[new_pos] = game_board[old_pos];
         game_board[new_pos].set_position(new_pos);
         game_board[old_pos] = null;
@@ -78,23 +210,29 @@ peggame.Board = function () {
         $("#" + old_pos).removeClass("on");
     };
 
-    // if you can move it, recalc the board and return true.
-    // else return false.
-    this.move_peg = function(old_pos, new_pos) {
+
+    /** 
+     * Move a peg from an old position to a new position.
+     *
+     * If you can move the peg to a new position, recalculate the board and return true.
+     * Else return false.
+     */
+    var move_peg = function(old_pos, new_pos) {
         if (game_board[old_pos]) {
-            var peg = game_board[old_pos];
-            var removed_peg = peg.move_peg_return_removed(new_pos);
+            
+            var peg = game_board[old_pos],
+                removed_peg = peg.move_peg_return_removed(new_pos);
             
             if (removed_peg !== "") {
-                this.reassign_peg(old_pos, new_pos);
-                this.remove_peg(removed_peg);
-                this.out();
+                reassign_peg(old_pos, new_pos);
+                remove_peg(removed_peg);
+                out();
 
                 // after moving/removing, check if the game is over
-                if (this.is_the_game_over()){
+                if (is_the_game_over()){
                     game_state = peggame.globals.STATE.END;
-                    this.out();
-                    this.end_game();
+                    out();
+                    end_game();
                 }
                 
                 return true;
@@ -110,23 +248,27 @@ peggame.Board = function () {
         }
     };
 
-    // Is the game still in progress or over?
-    // return true for yes, false for no
-    this.is_the_game_over = function() {
-        // base assumption: the game is over.
-        // easier/faster to falsify this than prove it.
+    
+    /** 
+     * Check if the game is over
+     *
+     * return true if the game is still in progress,
+     * return false if the game is over
+     */
+    var is_the_game_over = function() {
+        
+        // Base assumption: the game is over. Easier/faster to falsify this than prove it.
         var in_progress = false;
         
-        // check each peg that's still on game board
-        // get its available moves
+        // Check each peg that's still on game board.
         $.each(game_board, function(key, value) {
             if (value) {
                 var moves_available = value.get_moves_available();
 
-                // check the position of the available moves on the board
-                // if they're not taken, then there are still moves left for at least one peg.
-                // so set the state to in_progress and return false at the first instance of an available move.
-                // for a move to be "available", the taken peg must exist and the potential move must not be taken.
+                // Check the position of the available moves on the board
+                // If they're not taken, then there are still moves left for at least one peg.
+                // So set the state to in_progress and return false at the first instance of an available move.
+                // For a move to be "available", the taken peg must exist and the potential move must not be taken.
                 $.each(moves_available, function(key2, value2) {
                     if (game_board[value2] && (!game_board[key2])) {
                         game_state = peggame.globals.STATE.IN_PROGRESS;
@@ -137,35 +279,46 @@ peggame.Board = function () {
             }
         });
 
-        // if you got here, the game is over... as long as the game has started
+        // If you got here, the game is over... as long as the game has started.
         if (!in_progress && (game_state !== peggame.globals.STATE.NOT_STARTED)) {
             game_state = peggame.globals.STATE.END;
             return true;
         }
     };
 
-    this.out = function() {
-        $("#pegs-remaining-container span").html(remaining_pegs);
-        $("#status span").html(game_state);
+
+    /** 
+     * Output the status of the game at any given time.
+     *
+     * Includes remaining peg count and status message.
+     */
+    var out = function() {
+        $pegs_remaining_count.text(remaining_pegs);
+        $status_msg.html(game_state);
     };
 
-    this.end_game = function() {
-        var endContainer = $("#end-message");
-        $("#reset-game").show();
+
+    /** 
+     * End the game.
+     *
+     * Display the appropriate message.
+     */
+    var end_game = function() {
+        $reset_game_container.show();
         if (remaining_pegs >= 4) {
-            endContainer.append(  "<p>Over 3 pieces left!</p> " + 
+            $end_message.append(  "<p>Over 3 pieces left!</p> " + 
                                 "<p>You are an <strong>EEG-NO-RA-MOOSE</strong></p>" + 
                                 "<img src='img/moose.jpg'/>");
         } else if (remaining_pegs === 3) {
-            endContainer.append(  "<p>3 pieces left!</p> " + 
+            $end_message.append(  "<p>3 pieces left!</p> " + 
                                 "<p>You are <strong>JUST PLAIN DUMB</strong></p>" + 
                                 "<img src='img/dumb.jpg'/>");
         } else if (remaining_pegs === 2) {
-            endContainer.append(  "<p>2 pieces left!</p> " + 
+            $end_message.append(  "<p>2 pieces left!</p> " + 
                                 "<p>You are <strong>PRETTY SMART</strong></p>" + 
                                 "<img src='img/prettysmart.jpg'/>");
         } else if (remaining_pegs === 1) {
-            endContainer.append(  "<p>1 pieces left!</p> " + 
+            $end_message.append(  "<p>1 pieces left!</p> " + 
                                 "<p>You are a <strong>GENIUS!</strong></p>" + 
                                 "<img src='img/genius.jpg'/>");
         } else {
@@ -174,16 +327,7 @@ peggame.Board = function () {
     };
 
     return {
-        reset: this.reset,
-        start_game: this.start_game,
-        get_peg: this.get_peg,
-        add_peg: this.add_peg,
-        remove_peg: this.remove_peg,
-        reassign_peg: this.reassign_peg,
-        move_peg: this.move_peg,
-        out: this.out,
-        end_game: this.end_game,
-        is_the_game_over: this.is_the_game_over
+        start_game: start_game
     };
 
 };

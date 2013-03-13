@@ -10,11 +10,8 @@
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
-    <a id="help-me" href="javascript:;">Huh?</a>
-    <!-- ToDo: 
-    - Start by selecting an initial peg
-    - Better end states
-    -->
+    <a id="help" href="javascript:;">Help</a>
+
     <div class="wrapper">
         <div class="meta">
             <div id="pegs-remaining-container">
@@ -23,7 +20,7 @@
         </div>
         <div id="status">
             <strong>Status:</strong>
-            <span>You have not started.</span>
+            <span>Not Started</span>
         </div>
         <div class="main">     
             <div class="pegs">
@@ -47,7 +44,7 @@
                 <div id="N" class="peg"></div>
                 <div id="O" class="peg"></div>
             </div>
-            <div id="reset-game" style="display: none;">
+            <div id="reset-game-container" style="display: none;">
                 <button id="reset-button" type="button" name="reset" value="" class="css3button">Reset Game</button>
             </div>
             <div id="end-message">
