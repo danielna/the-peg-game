@@ -8,8 +8,8 @@ the Pegs
 peggame.Peg = function () {
 
     var 
-        position                = null,
-        moves_available         = {};
+        position = null,
+        moves_available = {};
 
     this.init = function(set_position) {
         position = set_position;
@@ -33,7 +33,6 @@ peggame.Peg = function () {
         this.calculate_moves_available();
     };
 
-    // 
     this.move_peg_return_removed = function(new_position) {
         this.calculate_moves_available();
         if (moves_available[new_position]) {
@@ -44,14 +43,7 @@ peggame.Peg = function () {
         }
     };
 
-    return {
-        init: this.init,
-        calculate_moves_available: this.calculate_moves_available,
-        get_moves_available: this.get_moves_available,
-        get_position: this.get_position,
-        set_position: this.set_position,
-        move_peg_return_removed: this.move_peg_return_removed
-    };
+    return this;
 
 };
 })();
