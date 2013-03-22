@@ -6,6 +6,7 @@ $(document).ready(function() {
             pegs: ".peg",
             pegs_remaining_count: "#pegs-remaining-container span",
             status_msg: "#status span",
+            start_message: "#start-message",
             end_message: "#end-message",
             reset_button: "#reset-button",
             reset_game_container: "#reset-game-container"
@@ -16,9 +17,15 @@ $(document).ready(function() {
      *  Intialize a new game.
      */
     pegBoard = new peggame.Board();
-    // ToDo: Allow players to select a starting position.
-    pegBoard.start_game("O", dom_pointers);
     
+    // ToDo: On game reset, give the option of resetting the starting peg position. 
+    $(dom_pointers.pegs).on("click", function start_game() {
+        var id = $(this).attr("id");
+        pegBoard.start_game(id, dom_pointers);
+
+        $(dom_pointers.start_message).hide();
+        $(dom_pointers.pegs).off("click", start_game);
+    });    
 
     /**
      * Help menu

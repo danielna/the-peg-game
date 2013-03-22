@@ -69,6 +69,12 @@ a#help:hover {
     padding: 25px;
     font-size: 18px;
 }
+#start-message {
+    font-family: "Droid Sans", Verdana;
+    margin-top: 10px;
+    font-size: 18px; 
+    color: #fff;
+}
 
 #reset-game-container {
     position: absolute;

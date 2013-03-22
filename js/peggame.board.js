@@ -25,6 +25,7 @@ peggame.Board = function () {
         $peg,
         $pegs_remaining_count,
         $status_msg,
+        $start_message,
         $end_message,
         $reset_button,
         $reset_game_container;
@@ -38,7 +39,7 @@ peggame.Board = function () {
       */
     var start_game = function(initial_open_position, set_dom_pointers) { 
         var _this = this;
-        
+      
         starting_position = initial_open_position;
         dom_pointers = set_dom_pointers;
 
